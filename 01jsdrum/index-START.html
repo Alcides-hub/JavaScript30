@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Drum Kit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+  <div class="keys">
+    <div data-key="65" class="key">
+      <kbd>A</kbd>
+      <span class="sound">clap</span>
+    </div>
+    <div data-key="83" class="key">
+      <kbd>S</kbd>
+      <span class="sound">hihat</span>
+    </div>
+    <div data-key="68" class="key">
+      <kbd>D</kbd>
+      <span class="sound">kick</span>
+    </div>
+    <div data-key="70" class="key">
+      <kbd>F</kbd>
+      <span class="sound">openhat</span>
+    </div>
+    <div data-key="71" class="key">
+      <kbd>G</kbd>
+      <span class="sound">boom</span>
+    </div>
+    <div data-key="72" class="key">
+      <kbd>H</kbd>
+      <span class="sound">ride</span>
+    </div>
+    <div data-key="74" class="key">
+      <kbd>J</kbd>
+      <span class="sound">snare</span>
+    </div>
+    <div data-key="75" class="key">
+      <kbd>K</kbd>
+      <span class="sound">tom</span>
+    </div>
+    <div data-key="76" class="key">
+      <kbd>L</kbd>
+      <span class="sound">tink</span>
+    </div>
+  </div>
+
+  <audio data-key="65" src="sounds/clap.wav"></audio>
+  <audio data-key="83" src="sounds/hihat.wav"></audio>
+  <audio data-key="68" src="sounds/kick.wav"></audio>
+  <audio data-key="70" src="sounds/openhat.wav"></audio>
+  <audio data-key="71" src="sounds/boom.wav"></audio>
+  <audio data-key="72" src="sounds/ride.wav"></audio>
+  <audio data-key="74" src="sounds/snare.wav"></audio>
+  <audio data-key="75" src="sounds/tom.wav"></audio>
+  <audio data-key="76" src="sounds/tink.wav"></audio>
+
+
+
+<script>
+
+window.addEventListener('keydown', function(e) {
+    console.log(e.keyCode);
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)
+    key.classList.add('playing');
+    if (!audio) return;
+    audio.currentTime = 0;
+    audio.play()
+  });
+
+  function removeTransition(e) {
+    if (e.propertyName !== 'transform') return;
+    console.log(e.propertyName);
+    this.classList.remove('playing');
+  };
+
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+
+  
+
+  // window.addEventListener('keydown', function(e) {
+  // console.log(e.keyCode);
+  // const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+  // const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+  // if (!audio) return; //stop the function from running.
+  // audio.currentTime=0; //rewinds to the start after keydown
+  // audio.play();
+  // console.log(key);
+  // key.classList.add('playing');
+  // });
+
+  // function removeTransition(e) {
+  //   if (e.propertyName !== 'transform') return; //skip if it is not a transform
+  //   console.log(e.propertyName);
+  //   this.classList.remove('playing');
+  // }
+
+  // this function will run until the transition has ended. Then you remove the key class with the playing class. Then playing class removes it's properties.
+  // this is for the purpose of removing the transition. 
+
+
+  // const keys = document.querySelectorAll('.key');
+  // keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+
+  // listen to a window, add event listener and event we are listening is keydown, then we have a function with event, run the function with the event, console.log that event.
+  // is there an audio element on the page that has a data-key of 65?
+  // we are going to select an audio element with querySelector, we are going to use an attribute selector of the key referring to the audio.
+  // there are event when transitioned, we can listen on each for when the transitioned happened. We want to select all the keys. 
+  // when you have an array of elements, you cannot listen to all of them, you must loop to each of them to be able to listen to each one of them.
+  // we have to create a function for removeTransition with an event parameter which can track for an event "transform" if 
+
+
+  // another way of writing the code, enabling playsound based of something else.
+// function playsound(e) {
+//   const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+//   const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+//   if (!audio) return; //stop the function from running.
+//   audio.currentTime=0; //rewinds to the start after keydown
+//   audio.play();
+//   key.classList.add('playing');
+// }
+
+// function removeTransition(e) {
+//   if (e.propertyName !== 'transform') return; //skip if it is not a transform
+//   console.log(e.propertyName);
+//   this.classList.remove('playing');
+// }
+
+// const keys = document.querySelectorAll('.key');
+// keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+// window.addEventListener('keydown', playsound);
+
+
+</script>
+</body>
+</html>
