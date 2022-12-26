@@ -26,6 +26,7 @@
     .panels {
       min-height: 100vh;
       overflow: hidden;
+      display: flex;
     }
 
     .panel {
@@ -43,6 +44,11 @@
       font-size: 20px;
       background-size: cover;
       background-position: center;
+      flex: 1; /* each of them are going to evenly distribute the space of the screen among each children */ 
+      display: flex; /* an element can be both a flex item and a flex container */
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
     }
 
     .panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
@@ -52,11 +58,21 @@
     .panel5 { background-image:url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500); }
 
     /* Flex Children */
-    .panel > * {
+    .panel > * {  /*selects all of the children after a selector */
       margin: 0;
       width: 100%;
       transition: transform 0.5s;
+      /* border: 1px solid red;  you want to put them on each of the child */
+      display: flex;
+      flex: 1 0 auto; /* these will change the position of the child elements to spread evenly */
+      justify-content: center;
+      align-items: center; /* these will center in each box horizontally */
     }
+
+    .panel > *:first-child { transform: translateY(-100%); }
+    .panel.open-active > *:first-child {transform: translateY(0);}
+    .panel > *:last-child { transform: translateY(100%);}
+    .panel.open-active > *:last-child {transform: translateY(0);}
 
     .panel p {
       text-transform: uppercase;
@@ -65,12 +81,13 @@
       font-size: 2em;
     }
     
-    .panel p:nth-child(2) {
+    .panel > *:nth-child(2) {
       font-size: 4em;
     }
 
     .panel.open {
       font-size: 40px;
+      flex: 5;  /* when it has a class of open it will take 5 times extra room.
     }
 
   </style>
@@ -105,6 +122,21 @@
   </div>
 
   <script>
+
+    const panels = document.querySelectorAll('.panel');
+    function toggleOpen() {
+      this.classList.toggle('open')
+    }
+    function toggleActive(e) {
+      console.log(e.propertyName);
+      if (e.propertyName.includes('flex')){
+        this.classList.toggle('open-active');
+      }
+      // this.classList.toggle
+    } 
+    
+    panels.forEach( panel => panel.addEventListener('click', toggleOpen));
+    panels.forEach( panel => panel.addEventListener('transitionend', toggleActive));
 
   </script>
 
