@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    </ul>
+  </form>
+<script>
+const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+
+const cities = [];
+const prom = fetch(endpoint);
+fetch(endpoint).then(blob => console.log(blob)); // it doesnt know what the data is. It's raw data and it has to be converted to JSON. If yo
+// you will need to type json as an extension of blob.
+fetch(endpoint) //
+      .then(blob => blob.json())
+      .then(data=>cities.push(...data)) //spread into the cities using the spread operator.
+      console.log(cities); // you look at the webtools you will see that there is a method and its 
+// you can push into cities if you want to keep the array from changing using let but if you set it as const then you need to push the data into the array. 
+// this is going to return another promise.
+//what can work with a promise if it's you call then. With this it doesnt know what kind of data it is just yet, so you need to convert the blob data into JSON, if you open the blob data in devtools, you will see the method json available to us.
+// console.log(prom) // something will eventually come back from this fetch.
+function findMatches(wordToMatch, cities) {
+  return cities.filter(place => {
+   // we need to figure out what the city or state matches what was searched.
+   const regex = new RegExp(wordToMatch, "g");
+   return place.city.match(regex) || place.state.match(regex)
+  });
+}
+</script>
+</body>
+</html>
